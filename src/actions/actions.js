@@ -25,3 +25,12 @@ export const addCart = (id) => {
         }
     }
 }
+
+export const addWishList = (id) => {
+    return {
+        type: 'ADD_WISHLIST',
+        payload: {
+            id
+        }
+    }
+}

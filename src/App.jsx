@@ -35,10 +35,10 @@ function App() {
   }, [dispatch])
 
   return (
-    <div className="bg-gray-200">
+    <div className="bg-gray-200 min-h-screen">
       <Navbar />
       <div className='w-[95%] lg:w-10/12 m-auto my-2 relative'>
-        <img src={main} alt="main" className='shadow-lg' />
+        <img src={main} alt="main" className='shadow-lg w-full sm:w-9/12 m-auto my-4' />
         <p className='text-white text-5xl font-bold absolute top-[30%] text-center w-full'>Back To School</p>
         <p className='text-white text-xl font-bold absolute top-[55%] text-center w-full'>Versatile and cumfy</p>
       </div>

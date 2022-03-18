@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import {createStore} from 'redux'
 import rootReducer from './reducers'
 import { Provider } from 'react-redux'
+import Cart from './components/Cart/Cart'
 
 const store = createStore(
   rootReducer,
@@ -18,6 +19,7 @@ ReactDOM.render(
       <Router>
         <Routes>
           <Route path='/' element={ <App /> } />
+          <Route path='/cart' element={ <Cart /> } />
         </Routes>
       </Router>
     </React.StrictMode>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FaAlignJustify, FaAngleDoubleLeft, FaArrowDown, FaHeart, FaSearch, FaShoppingCart, FaStopCircle, FaUserCircle, FaUserPlus } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -8,22 +9,27 @@ const Navbar = () => {
     const [searchBar, setSearchBar] = useState(false)
     const [sideBar, setSideBar] = useState(false)
 
-    const count = useSelector(state => state.cart.count)   
+    const count = useSelector(state => state.cart.count)
+    const wishCount = useSelector(state => state.wishList.count)
+
 
     return (
         <div>
             <div className='bg-white flex flex-col'>
                 <div className="py-4 px-4 flex flex-row justify-content items-center justify-between shadow-md">
-                    <p className="text-2xl">Ecommerce</p>
+                    <Link to='/'><p className="text-4xl font-medium">Ecommerce</p></Link>
                     <div className='flex flex-row justify-between'>
                         { !sideBar ?
                             <FaAlignJustify className='hover:cursor-pointer hover:opacity-75 text-black mx-2' onClick={() => setSideBar(!sideBar)}/>
                             : null
                         }
-                        <FaHeart className='hover:cursor-pointer hover:opacity-75 text-black mx-2'/>
+                        <div className="relative">
+                            <FaHeart className='hover:cursor-pointer hover:opacity-75 text-black mx-2'/>
+                            <p className='absolute bottom-0 right-0 text-red-500 text-sm font-semibold'>{wishCount}</p>
+                        </div>
                         <div className='relative'>
-                            <FaShoppingCart className='hover:cursor-pointer hover:opacity-75 text-black mx-2'/>
-                            <p className='absolute bottom-0 right-0 text-red-500 text-sm'>{count}</p>
+                            <Link to='/cart'><FaShoppingCart className='hover:cursor-pointer hover:opacity-75 text-black mx-2'/></Link>
+                            <p className='absolute bottom-0 right-0 text-red-500 text-sm font-semibold'>{count}</p>
                         </div>
                         { !searchBar ? 
                             <FaSearch className='hover:cursor-pointer hover:opacity-75 text-black mx-2' onClick={() => setSearchBar(!searchBar)}/>
@@ -55,7 +61,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <div className={!sideBar ? 'hidden' : 'z-50 absolute h-[90%] shadow-lg w-10/12 bg-white border border-gray-200'}>
+            <div className={!sideBar ? 'hidden' : 'z-50 absolute min-h-screen shadow-lg w-10/12 bg-white border border-gray-200'}>
                 <div className='flex flex-row justify-content divide-x items-center justify-between w-10/12 m-auto'>
                     <div className='flex flex-row justify-content items-center justify-between py-4'>
                         <FaUserCircle className='mx-2'/>

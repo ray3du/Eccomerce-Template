@@ -9,3 +9,19 @@ export const mainLoader = () => {
         type: 'MAINLOADER'
     }
 }
+
+export const productAction = (data) => {
+    return {
+        type: 'ADD_PRODUCT',
+        payload: data
+    }
+}
+
+export const addCart = (id) => {
+    return {
+        type: 'ADD_CART',
+        payload: {
+            id
+        }
+    }
+}

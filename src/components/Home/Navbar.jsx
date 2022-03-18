@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import { FaAlignJustify, FaAngleDoubleLeft, FaArrowDown, FaSearch, FaShoppingCart, FaStopCircle, FaUserCircle, FaUserPlus } from 'react-icons/fa'
+import { FaAlignJustify, FaAngleDoubleLeft, FaArrowDown, FaHeart, FaSearch, FaShoppingCart, FaStopCircle, FaUserCircle, FaUserPlus } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
 
     const [dropdown, setDropdown] = useState(false)
     const [searchBar, setSearchBar] = useState(false)
     const [sideBar, setSideBar] = useState(false)
+
+    const count = useSelector(state => state.cart.count)   
 
     return (
         <div>
@@ -17,7 +20,11 @@ const Navbar = () => {
                             <FaAlignJustify className='hover:cursor-pointer hover:opacity-75 text-black mx-2' onClick={() => setSideBar(!sideBar)}/>
                             : null
                         }
-                        <FaShoppingCart className='hover:cursor-pointer hover:opacity-75 text-black mx-2'/>
+                        <FaHeart className='hover:cursor-pointer hover:opacity-75 text-black mx-2'/>
+                        <div className='relative'>
+                            <FaShoppingCart className='hover:cursor-pointer hover:opacity-75 text-black mx-2'/>
+                            <p className='absolute bottom-0 right-0 text-red-500 text-sm'>{count}</p>
+                        </div>
                         { !searchBar ? 
                             <FaSearch className='hover:cursor-pointer hover:opacity-75 text-black mx-2' onClick={() => setSearchBar(!searchBar)}/>
                             :

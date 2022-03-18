@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { increment } from './actions/actions'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { productAction } from './actions/actions'
 import './App.css'
 import Best from './components/Home/Best'
 import Latest from './components/Home/Latest'
@@ -9,8 +10,7 @@ import Offer from './components/Home/Offer'
 import main from './public/img/main.jpg'
 
 function App() {
-  const count = useSelector(state => state.counter)
-  const mainLoader = useSelector(state => state.mainLoader)
+    
   const [indicator, setIndicator] = useState({
     latest: "border-b-4 border-indigo-500",
     best: "",
@@ -19,8 +19,23 @@ function App() {
 
   const dispatch = useDispatch()
 
+  const fetchProducts = async () => {
+    await axios.get('http://127.0.0.1:8000/product/')
+    .then(res => {
+      dispatch(productAction(res.data))
+      console.log(res.data)
+    }) 
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  useEffect(() => {
+    fetchProducts()
+  }, [dispatch])
+
   return (
-    <div className="bg-gray-200 h-screen">
+    <div className="bg-gray-200">
       <Navbar />
       <div className='w-[95%] lg:w-10/12 m-auto my-2 relative'>
         <img src={main} alt="main" className='shadow-lg' />

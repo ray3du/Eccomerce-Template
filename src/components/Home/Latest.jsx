@@ -9,12 +9,19 @@ const Latest = () => {
     const products = useSelector(state => state.product)
     const cartId = useSelector(state => state.cart.id)
     const wishId = useSelector(state => state.wishList.id)
-    const shipment = JSON.stringify(useSelector(state => state.shipment))
-
-    console.log(`Category: ${shipment}`)
-    console.log(`Has: ${shipment.includes("Local")}`)
 
     const dispatch = useDispatch()
+
+    const addToWhishList = (id) => {
+        console.log(wishId.includes(id))
+        if(wishId.length > 0){
+            if (!wishId.includes(id)) {
+                dispatch(addWishList(id))   
+            }
+        }else{
+            dispatch(addWishList(id))
+        }
+    }
 
     return (
         <div className="pb-12">
@@ -46,7 +53,7 @@ const Latest = () => {
                                 <button disabled={cartId.includes(product.id) ? true: false} onClick={() => dispatch(addCart(`${product.id}`))} className={cartId.includes(product.id) ? "bg-slate-300 py-2 w-11/12 border border border-slate-200 rounded mb-4 font-bold": "py-2 w-11/12 border border border-slate-200 rounded mb-4 font-bold hover:bg-slate-100"}>{cartId.includes(product.id) ? <span className="flex flex-row justify-center items-center">ADDED <FaCheck className="mx-3 text-sky-600"/></span> : 'ADD TO CART'}</button>
                             </div>
                             <div className="absolute right-4 top-2">
-                                <button disabled={wishId.includes(product.id) ? true: false}><FaHeart onClick={() => dispatch(addWishList(`${product.id}`))} className={wishId.includes(product.id) ? "text-3xl text-yellow-300 hover:cursor-pointer hover:text-yellow-400": "text-3xl text-white hover:cursor-pointer hover:text-gray-100"} /></button>
+                                <button disabled={wishId.includes(product.id) ? true: false}><FaHeart onClick={() => addToWhishList(`${product.id}`)} className={wishId.includes(product.id) ? "text-3xl text-yellow-300 hover:cursor-pointer hover:text-yellow-400": "text-3xl text-white hover:cursor-pointer hover:text-gray-100"} /></button>
                             </div>
                         </div>
                     ))

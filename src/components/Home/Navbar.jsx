@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FaAlignJustify, FaAngleDoubleLeft, FaArrowDown, FaHeart, FaSearch, FaShoppingCart, FaStopCircle, FaUserCircle, FaUserPlus } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import WalletConnect from './WalletCollect'
 
 const Navbar = () => {
 
@@ -17,8 +18,8 @@ const Navbar = () => {
         <div>
             <div className='bg-white flex flex-col'>
                 <div className="py-4 px-4 flex flex-row justify-content items-center justify-between shadow-md">
-                    <Link to='/'><p className="text-4xl font-medium">Ecommerce</p></Link>
-                    <div className='flex flex-row justify-between'>
+                    <Link to='/'><p className="text-lg sm:text-4xl font-medium">Ecommerce</p></Link>
+                    <div className='flex flex-row justify-between items-center'>
                         { !sideBar ?
                             <FaAlignJustify className='hover:cursor-pointer hover:opacity-75 text-black mx-2' onClick={() => setSideBar(!sideBar)}/>
                             : null
@@ -36,6 +37,7 @@ const Navbar = () => {
                             :
                             <FaStopCircle className='hover:cursor-pointer hover:opacity-75 text-black mx-2' onClick={() => setSearchBar(!searchBar)}/>
                         }
+                        <WalletConnect />
                     </div>
                 </div>
                 <div className={!searchBar ? 'hidden' : 'py-2 bg-gray-200'}>

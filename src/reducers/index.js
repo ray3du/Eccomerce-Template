@@ -9,6 +9,8 @@ import addSubCategoryReducer from './addSubCategoryReducer'
 import addColorReducer from './addColorReducer'
 import addSizeReducer from './addSizeReducer'
 import addShipmentReducer from './addShipmentReducer'
+import walletConnectedReducer from './walletConnectedReducer'
+import addAddressReducer from './addAddressReducer'
 
 const rootReducer = combineReducers({
     counter: countReducer,
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
     color: addColorReducer,
     size: addSizeReducer,
     shipment: addShipmentReducer,
+    walletConnected: walletConnectedReducer,
+    address: addAddressReducer,
 })
 
 export default rootReducer

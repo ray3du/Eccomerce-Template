@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addCategory, addColor, addShipment, addSize, addSubCategory, productAction } from './actions/actions'
 import './App.css'
@@ -23,7 +23,6 @@ function App() {
     await axios.get('http://127.0.0.1:8000/product/')
     .then(res => {
       dispatch(productAction(res.data))
-      console.log(res.data)
     }) 
     .catch(err => {
       console.log(err)
@@ -34,7 +33,6 @@ function App() {
     await axios.get('http://127.0.0.1:8000/category/')
     .then(res => {
       dispatch(addCategory(res.data))
-      console.log(res.data)
     }) 
     .catch(err => {
       console.log(err)
@@ -45,7 +43,6 @@ function App() {
     await axios.get('http://127.0.0.1:8000/subCategory/')
     .then(res => {
       dispatch(addSubCategory(res.data))
-      console.log(res.data)
     }) 
     .catch(err => {
       console.log(err)
@@ -56,7 +53,6 @@ function App() {
     await axios.get('http://127.0.0.1:8000/color/')
     .then(res => {
       dispatch(addColor(res.data))
-      console.log(res.data)
     }) 
     .catch(err => {
       console.log(err)
@@ -67,7 +63,6 @@ function App() {
     await axios.get('http://127.0.0.1:8000/size/')
     .then(res => {
       dispatch(addSize(res.data))
-      console.log(res.data)
     }) 
     .catch(err => {
       console.log(err)
@@ -78,7 +73,6 @@ function App() {
     await axios.get('http://127.0.0.1:8000/shipment/')
     .then(res => {
       dispatch(addShipment(res.data))
-      console.log(res.data)
     }) 
     .catch(err => {
       console.log(err)
@@ -107,9 +101,6 @@ function App() {
         <button className={indicator.best} onClick={() => setIndicator(prevState => ({...prevState, latest: '', best: 'border-b-4 border-indigo-500', offer: ''}))}>Best Seller</button>
         <button className={indicator.offer} onClick={() => setIndicator(prevState => ({...prevState, latest: '', best: '', offer: 'border-b-4 border-indigo-500'}))}>Offers</button>
       </div>
-      {/* <div className='flex justify-center items-center'>
-        {!mainLoader ? <div className='loaderMain'></div> : null}
-      </div> */}
       <div className='w-11/12 m-auto'>
       {
         indicator.latest !== "" ?

@@ -70,3 +70,15 @@ export const addShipment = (data) => {
     }
 }
 
+export const setWalletConnected = () => {
+    return {
+        type: 'SET_CONNECTED'
+    }
+}
+
+export const addAddress = (address) => {
+    return {
+        type: 'ADD_ADDRESS',
+        payload: address
+    }
+}

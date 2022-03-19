@@ -1,5 +1,5 @@
-from ecommerce.models import Category, Product, ProductImage, SubCategory
-from ecommerce.serializers import CategorySerializer, ProductImageSerializer, ProductSerializer, SubCategorySerializer
+from ecommerce.models import Category, Color, Product, ProductImage, Shipment, Size, SubCategory
+from ecommerce.serializers import CategorySerializer, ColorSerializer, ProductImageSerializer, ProductSerializer, ShipmentSerializer, SizeSerializer, SubCategorySerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
@@ -32,4 +32,24 @@ class SubCategoryAPIView(APIView):
     def get(self, request):
         qs = SubCategory.objects.all()
         serializer = SubCategorySerializer(qs, many=True)
+        return Response(data=serializer.data, status=HTTP_200_OK)
+
+
+class ColorAPIView(APIView):
+    def get(self, request):
+        qs = Color.objects.all()
+        serializer = ColorSerializer(qs, many=True)
+        return Response(data=serializer.data, status=HTTP_200_OK)
+
+
+class SizeAPIView(APIView):
+    def get(self, request):
+        qs = Size.objects.all()
+        serializer = SizeSerializer(qs, many=True)
+        return Response(data=serializer.data, status=HTTP_200_OK)
+
+class ShipmentAPIView(APIView):
+    def get(self, request):
+        qs = Shipment.objects.all()
+        serializer = ShipmentSerializer(qs, many=True)
         return Response(data=serializer.data, status=HTTP_200_OK)

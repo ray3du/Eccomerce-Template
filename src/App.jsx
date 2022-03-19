@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { productAction } from './actions/actions'
+import { addCategory, addColor, addShipment, addSize, addSubCategory, productAction } from './actions/actions'
 import './App.css'
 import Best from './components/Home/Best'
 import Latest from './components/Home/Latest'
@@ -30,15 +30,75 @@ function App() {
     })
   }
 
+  const fetchCategory = async () => {
+    await axios.get('http://127.0.0.1:8000/category/')
+    .then(res => {
+      dispatch(addCategory(res.data))
+      console.log(res.data)
+    }) 
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  const fetchSubCategory = async () => {
+    await axios.get('http://127.0.0.1:8000/subCategory/')
+    .then(res => {
+      dispatch(addSubCategory(res.data))
+      console.log(res.data)
+    }) 
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  const fetchColor = async () => {
+    await axios.get('http://127.0.0.1:8000/color/')
+    .then(res => {
+      dispatch(addColor(res.data))
+      console.log(res.data)
+    }) 
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  const fetchSize = async () => {
+    await axios.get('http://127.0.0.1:8000/size/')
+    .then(res => {
+      dispatch(addSize(res.data))
+      console.log(res.data)
+    }) 
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
+  const fetchShipment = async () => {
+    await axios.get('http://127.0.0.1:8000/shipment/')
+    .then(res => {
+      dispatch(addShipment(res.data))
+      console.log(res.data)
+    }) 
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   useEffect(() => {
     fetchProducts()
+    fetchCategory()
+    fetchSubCategory()
+    fetchColor(),
+    fetchSize(),
+    fetchShipment()
   }, [dispatch])
 
   return (
     <div className="bg-gray-200 min-h-screen">
       <Navbar />
-      <div className='w-[95%] lg:w-10/12 m-auto my-2 relative'>
-        <img src={main} alt="main" className='shadow-lg w-full sm:w-9/12 m-auto my-4' />
+      <div className='w-[95%] lg:w-10/12 m-auto my-2 relative min-h-48'>
+        <img src={main} alt="main" className='shadow-lg w-full sm:w-9/12 m-auto my-4 min-h-48' />
         <p className='text-white text-5xl font-bold absolute top-[30%] text-center w-full'>Back To School</p>
         <p className='text-white text-xl font-bold absolute top-[55%] text-center w-full'>Versatile and cumfy</p>
       </div>

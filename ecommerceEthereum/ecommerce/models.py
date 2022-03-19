@@ -6,7 +6,7 @@ def upload_image_path(instance, filename):
     return "user_{0}/{1}".format(uuid.uuid4(), filename)
 
 class Category(models.Model):
-    id = models.IntegerField(primary_key=True, default=0)
+    id = models.IntegerField(primary_key=True, default=0, auto_created=True)
     name = models.CharField(max_length=100)
 
     def __str__(self) -> str:
@@ -19,6 +19,29 @@ class SubCategory(models.Model):
     def __str__(self) -> str:
         return self.name
 
+class Color(models.Model):
+    id = models.IntegerField(primary_key=True, default=0, auto_created=True)
+    color = models.CharField(max_length=100, default='None') 
+
+    def __str__(self) -> str:
+        return self.color
+
+
+class Size(models.Model):
+    id = models.IntegerField(primary_key=True, default=0, auto_created=True)
+    size = models.CharField(max_length=100, default='None')
+
+    def __str__(self) -> str:
+        return self.size
+
+
+class Shipment(models.Model):
+    id = models.IntegerField(primary_key=True, default=0, auto_created=True)
+    shipment = models.CharField(max_length=100, default='Local') 
+
+    def __str__(self) -> str:
+        return self.shipment
+
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200)
@@ -26,7 +49,10 @@ class Product(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.DO_NOTHING)
-    
+    color = models.ForeignKey(Color, on_delete=models.DO_NOTHING)
+    size = models.ForeignKey(Size, on_delete=models.DO_NOTHING)
+    shipment = models.ForeignKey(Shipment, on_delete=models.DO_NOTHING)
+
     def __str__(self) -> str:
         return str(self.id)
 
@@ -36,3 +62,4 @@ class ProductImage(models.Model):
 
     def __str__(self) -> str:
         return str(self.product)
+

@@ -1,4 +1,4 @@
-from ecommerce.models import Category, Product, ProductImage, SubCategory
+from ecommerce.models import Category, Color, Product, ProductImage, Shipment, Size, SubCategory
 from rest_framework.serializers import ModelSerializer
 
 class ProductSerializer(ModelSerializer):
@@ -21,3 +21,17 @@ class SubCategorySerializer(ModelSerializer):
         model = SubCategory
         fields = '__all__'
 
+class ColorSerializer(ModelSerializer):
+    class Meta:
+        model = Color
+        fields = '__all__'
+
+class SizeSerializer(ModelSerializer):
+    class Meta:
+        model = Size
+        fields = '__all__'
+
+class ShipmentSerializer(ModelSerializer):
+    class Meta:
+        model = Shipment
+        fields = '__all__'

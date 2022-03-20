@@ -3,7 +3,7 @@ const initialState = {
     count: 0
 }
 
-const addCartReducer = (state = initialState, action) => {
+const CartReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_CART':
             return {
@@ -11,9 +11,15 @@ const addCartReducer = (state = initialState, action) => {
                 id: [...state.id, action.payload.id],
                 count: state.count += 1 
             }
+        case 'REMOVE_CART':
+            return {
+                ...state,
+                id: state.id.filter(item =>  { return item !== action.payload.id }),
+                count: state.count -= 1 
+            }
         default:
             return state
     }
 }
 
-export default addCartReducer
+export default CartReducer

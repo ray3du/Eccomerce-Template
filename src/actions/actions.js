@@ -26,9 +26,27 @@ export const addCart = (id) => {
     }
 }
 
+export const removeCart = (id) => {
+    return {
+        type: 'REMOVE_CART',
+        payload: {
+            id
+        }
+    }
+}
+
 export const addWishList = (id) => {
     return {
         type: 'ADD_WISHLIST',
+        payload: {
+            id
+        }
+    }
+}
+
+export const removeWishList = (id) => {
+    return {
+        type: 'REMOVE_WISHLIST',
         payload: {
             id
         }

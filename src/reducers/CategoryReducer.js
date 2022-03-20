@@ -1,4 +1,4 @@
-const addCategoryReducer = (state = [], action) => {
+const CategoryReducer = (state = [], action) => {
     switch (action.type) {
         case 'ADD_CATEGORY':
             return action.payload
@@ -7,4 +7,4 @@ const addCategoryReducer = (state = [], action) => {
     }
 }
 
-export default addCategoryReducer
+export default CategoryReducer

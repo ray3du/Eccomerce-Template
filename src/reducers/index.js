@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux'
 import countReducer from './countReducer'
 import mainLoaderReducer from './mainLoaderReducer'
-import addProductReducer from './addProductReducer'
-import addCartReducer from './addCartReducer'
-import addWishListReducer from './addWishListReducer'
-import addCategoryReducer from './addCategoryReducer'
+import ProductReducer from './ProductReducer'
+import CartReducer from './CartReducer'
+import WishListReducer from './WishListReducer'
+import CategoryReducer from './CategoryReducer'
 import addSubCategoryReducer from './addSubCategoryReducer'
 import addColorReducer from './addColorReducer'
 import addSizeReducer from './addSizeReducer'
@@ -15,10 +15,10 @@ import addAddressReducer from './addAddressReducer'
 const rootReducer = combineReducers({
     counter: countReducer,
     mainLoader: mainLoaderReducer,
-    product: addProductReducer,
-    cart: addCartReducer,
-    wishList: addWishListReducer,
-    category: addCategoryReducer,
+    product: ProductReducer,
+    cart: CartReducer,
+    wishList: WishListReducer,
+    category: CategoryReducer,
     subCategory: addSubCategoryReducer,
     color: addColorReducer,
     size: addSizeReducer,

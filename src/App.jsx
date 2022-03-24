@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addCategory, addColor, addShipment, addSize, addSubCategory, productAction } from './actions/actions'
+import { addAllIMages, addCategory, addColor, addImages, addShipment, addSize, addSubCategory, productAction } from './actions/actions'
 import './App.css'
 import Best from './components/Home/Best'
 import Latest from './components/Home/Latest'
@@ -79,13 +79,73 @@ function App() {
     })
   }
 
+  const setImage = async (res) => {
+    const images = res
+    const duplicate = []
+    const data = []
+
+    for (let index = 0; index < images.length; index++) {
+      if (!duplicate.includes(images[index].product)) {
+        await axios.get(`http://127.0.0.1:8000${images[index].path}`, {responseType: 'blob'})
+        .then(res => {
+            const imageObjectURL = URL.createObjectURL(res.data)
+            data.push({product: images[index].product, path: imageObjectURL})
+          })
+        .catch(err => {
+            console.error(err)
+        })  
+      }
+      duplicate.push(images[index].product)
+    }
+    return data
+  }
+
+  const setAllImage = async (res) => {
+    const images = res
+    const duplicate = []
+    const data = []
+
+    for (let index = 0; index < images.length; index++) {
+      await axios.get(`http://127.0.0.1:8000${images[index].path}`, {responseType: 'blob'})
+        .then(res => {
+            const imageObjectURL = URL.createObjectURL(res.data)
+            data.push({product: images[index].product, path: imageObjectURL})
+          })
+        .catch(err => {
+            console.error(err)
+        }) 
+      duplicate.push(images[index].product)
+    }
+    return data
+  }
+
+  const fetchImages = async () => {
+    await axios.get('http://127.0.0.1:8000/image/')
+    .then(res => {
+      setImage(res.data)
+      .then(result => {
+        dispatch(addImages(result))
+      })
+      .catch(err => console.error(err))
+      setAllImage(res.data)
+      .then(result => {
+        dispatch(addAllIMages(result))
+      })
+      .catch(err => console.error(err))        
+    }) 
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   useEffect(() => {
     fetchProducts()
     fetchCategory()
     fetchSubCategory()
     fetchColor(),
     fetchSize(),
-    fetchShipment()
+    fetchShipment(),
+    fetchImages()
   }, [dispatch])
 
   return (

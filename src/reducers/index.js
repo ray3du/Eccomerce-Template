@@ -11,6 +11,9 @@ import addSizeReducer from './addSizeReducer'
 import addShipmentReducer from './addShipmentReducer'
 import walletConnectedReducer from './walletConnectedReducer'
 import addAddressReducer from './addAddressReducer'
+import CategoriesReducer from './CategoriesReducer'
+import ImageReducer from './ImagesReducer'
+import AllimagesReducer from './AllimagesReducer'
 
 const rootReducer = combineReducers({
     counter: countReducer,
@@ -25,6 +28,9 @@ const rootReducer = combineReducers({
     shipment: addShipmentReducer,
     walletConnected: walletConnectedReducer,
     address: addAddressReducer,
+    cat: CategoriesReducer,
+    images: ImageReducer,
+    allIMages: AllimagesReducer,
 })
 
 export default rootReducer

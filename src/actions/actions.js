@@ -100,3 +100,24 @@ export const addAddress = (address) => {
         payload: address
     }
 }
+
+export const categoryCat = (id) => {
+    return {
+        type: 'CATEGORY',
+        payload: id
+    }
+}
+
+export const addImages = (path) => {
+    return {
+        type: 'ADD_IMAGE',
+        payload: path
+    }
+}
+
+export const addAllIMages = (path) => {
+    return {
+        type: 'ADD_ALL_IMAGES',
+        payload: path
+    }
+}

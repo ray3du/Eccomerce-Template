@@ -21,9 +21,9 @@ const WalletConnect = () => {
         }
     }
 
-    useEffect(() => {
-        connectWallet()
-    }, [dispatch, walletConnected])
+    // useEffect(() => {
+    //     connectWallet()
+    // }, [dispatch, walletConnected])
 
     return (
         <div>

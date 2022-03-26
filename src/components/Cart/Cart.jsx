@@ -2,7 +2,7 @@ import Navbar from "../Home/Navbar"
 import img from "../../public/img/main.jpg"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
-import { removeCart } from "../../actions/actions"
+import { addQuantity, removeCart, subQuantity } from "../../actions/actions"
 import { FaChevronRight } from "react-icons/fa"
 
 const Cart = () => {
@@ -12,17 +12,21 @@ const Cart = () => {
     const colors = useSelector(state => state.color)
     const sizes = useSelector(state => state.size)
     const subCategories = useSelector(state => state.subCategory)
+    const images = useSelector(state => state.images)
 
-    const [number, setNumber] = useState(1)
+    const [number, setNumber] = useState({
+        id: "",
+        quantity: 1
+    })
 
-    const handleNumberChange = (e) => {
-        e.persist()
-        if (e.target.value < 1) {
-            setNumber(1)
-        }else{
-            setNumber(e.target.value)
-        }
-    }
+    // const handleNumberChange = (e) => {
+    //     e.persist()
+    //     if (e.target.value < 1) {
+    //         setNumber(1)
+    //     }else{
+    //         setNumber(e.target.value)
+    //     }
+    // }
 
     const dispatch = useDispatch()
     
@@ -40,9 +44,15 @@ const Cart = () => {
                             products.length > 0 ?
                             products.map(product => (
                                 carts.includes(product.id) ?
-                                <div className="my-8">
+                                <div className="my-4" key={product.id}>
                                     <div className="bg-white shadow-lg rounded flex flex-col sm:flex-row justify-between">
-                                        <img src={img} alt="item" className="h-48 sm:w-4/12"/>
+                                        {
+                                            images.map(image => ( 
+                                                image.product == product.id ?
+                                                    <img src={image.path} alt="item" className="h-48 sm:w-4/12 object-contain"/>
+                                                : null
+                                            ))
+                                        }
                                         <div className="flex flex-col">
                                             <p className="font-bold mx-4 text-lg my-2">Product</p>
                                             <p className="font-semibold text-gray-500 mx-4 text-lg">{product.name}</p>
@@ -82,9 +92,14 @@ const Cart = () => {
                                             </div>
                                         </div>
                                         <div>
-                                        <div className="flex flex-row my-4 sm:mt-12 w-11/12 m-auto justify-between">
+                                        <div className="flex flex-row mx-3 md:mx-0 my-4 sm:mt-12 w-4/12 md:w-11/12 md:m-auto justify-between">
                                             <p className="sm:text-lg md:text-xl mx-2">Quatity:</p>
-                                            <input type="number" name="quantity" value={number} onChange={handleNumberChange} className="px-2 border border-gray-300 outline-none w-10/12" placeholder="1"/>
+                                            {/* <input type="number" name="quantity" value={number.quantity} onChange={addQuantity(`${product.id}`)} className="px-2 border border-gray-300 outline-none w-10/12" placeholder="1"/> */}
+                                            <div className="flex flex-row w-full justify-start items-center mr-4 bg-gray-100 px-2">
+                                                <button className="mr-2 pr-2 hover:opacity-75 text-lg font-bold">-</button>
+                                                <p className="bg-white px-3 border-r border-l border-gray-400">2</p>
+                                                <button className="ml-2 pl-2 hover:opacity-75 text-lg font-bold" onClick={() => dispatch(addQuantity(`${product.id}`))}>+</button>
+                                            </div>
                                         </div>
                                         <div className="flex flex-row w-11/12 m-auto justify-between">
                                             <p className="sm:text-lg md:text-xl mx-2">Total:</p>
@@ -109,10 +124,10 @@ const Cart = () => {
                                     <table className="table-fixed w-11/12 m-auto my-4">
                                         <thead className="bg-slate-100 px-6">
                                             <tr>
-                                            <th>Item</th>
-                                            <th>Quantity</th>
-                                            <th>Price</th>
-                                            <th>SubTotal</th>
+                                            <th className="text-start">Item</th>
+                                            <th className="text-start">Quantity</th>
+                                            <th className="text-start">Price</th>
+                                            <th className="text-start">SubTotal</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,10 +135,10 @@ const Cart = () => {
                                             products.map(product => (
                                                 carts.includes(product.id) ?
                                             <tr className="my-4">
-                                            <td className="text-center truncate">{product.name}</td>
-                                            <td className="text-center">Malcolm Lockyer</td>
-                                            <td className="text-center">{product.price}</td>
-                                            <td className="text-center">{product.price * number}</td>
+                                            <td className="text-start truncate">{product.name}</td>
+                                            <td className="text-start">Malcolm Lockyer</td>
+                                            <td className="text-start">{product.price}</td>
+                                            <td className="text-start">{product.price * number}</td>
                                             </tr>
                                             : null
                                             )) : null

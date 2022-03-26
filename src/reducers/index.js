@@ -14,6 +14,8 @@ import addAddressReducer from './addAddressReducer'
 import CategoriesReducer from './CategoriesReducer'
 import ImageReducer from './ImagesReducer'
 import AllimagesReducer from './AllimagesReducer'
+import ViewReducer from './ViewReducer'
+import QuantityReducer from './QuantityReducer'
 
 const rootReducer = combineReducers({
     counter: countReducer,
@@ -31,6 +33,8 @@ const rootReducer = combineReducers({
     cat: CategoriesReducer,
     images: ImageReducer,
     allIMages: AllimagesReducer,
+    view: ViewReducer,
+    quantity: QuantityReducer,
 })
 
 export default rootReducer

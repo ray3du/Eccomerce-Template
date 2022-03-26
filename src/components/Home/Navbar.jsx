@@ -21,8 +21,8 @@ const Navbar = () => {
     return (
         <div>
             <div className='bg-white flex flex-col'>
-                <div className="py-4 px-4 flex flex-row justify-content items-center justify-between shadow-md">
-                    <Link to='/'><p className="text-lg sm:text-4xl font-medium">Ecommerce</p></Link>
+                <div className="py-3 px-4 flex flex-row justify-content items-center justify-between shadow-md">
+                    <Link to='/'><p className="text-lg sm:text-4xl font-medium hover:text-gray-600">Ecommerce</p></Link>
                     <div className='flex flex-row justify-between items-center'>
                         {!sideBar ?
                             <FaAlignJustify className='hover:cursor-pointer hover:opacity-75 text-black mx-2' onClick={() => { setSideBar(!sideBar); setSearchBar(searchBar ? false: searchBar) }} />

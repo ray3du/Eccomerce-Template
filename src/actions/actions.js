@@ -121,3 +121,24 @@ export const addAllIMages = (path) => {
         payload: path
     }
 }
+
+export const addView = (id) => {
+    return {
+        type: 'ADD_VIEW',
+        payload: id
+    }
+}
+
+export const addQuantity = (id) => {
+    return {
+        type: 'ADD_QUANTITY',
+        payload: id
+    }
+}
+
+export const subQuantity = (id) => {
+    return {
+        type: 'SUB_QUANTITY',
+        payload: id
+    }
+}

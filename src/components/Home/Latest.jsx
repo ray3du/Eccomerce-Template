@@ -2,8 +2,9 @@ import _ from "lodash"
 import { FaCheck, FaEthereum, FaPlane } from "react-icons/fa"
 import { FiHeart } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
-import { addCart, addWishList } from "../../actions/actions"
+import { addCart, addView, addWishList } from "../../actions/actions"
 import { ProgressBar } from 'react-progressbar-loader-circle'
+import { Link } from "react-router-dom"
 
 const Latest = () => {
 
@@ -33,11 +34,11 @@ const Latest = () => {
                             {
                                 images.map((image) => (
                                     product.id === image.product ?
-                                        <img  key={image.product} src={image.path} alt="card-img" className="w-full h-52 object-contain"/>
+                                        <Link to={{pathname: `/product/${product.id}`, state: 'Hello' }} key={image.product} ><img src={image.path} alt="card-img" className="w-full h-52 object-contain"/></Link>
                                     : null
                                 ))
                             }
-                            <p className="mx-4 my-2 text-2xl text-gray-700 font-bold truncate">{product.name}</p>
+                            <p className="mx-3 my-2 text-2xl text-gray-700 font-bold truncate">{product.name}</p>
                             <div className="flex flex-row items-center my-2 ml-2">
                                 <p className="mx-2 text-lg text-gray-700 font-bold">Price:</p>
                                 <p className="mx-2 text-lg text-gray-700">Ksh</p>

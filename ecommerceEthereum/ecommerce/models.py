@@ -5,6 +5,10 @@ from django.db import models
 def upload_image_path(instance, filename):
     return "user_{0}/{1}".format(uuid.uuid4(), filename)
 
+def upload_cover_image_path(instance, filename):
+    return "cover_{0}/{1}".format(uuid.uuid4(), filename)
+
+
 class Category(models.Model):
     id = models.IntegerField(primary_key=True, default=0, auto_created=True)
     name = models.CharField(max_length=100)
@@ -63,3 +67,10 @@ class ProductImage(models.Model):
     def __str__(self) -> str:
         return str(self.product)
 
+class CoverImage(models.Model):
+    id = models.IntegerField(primary_key=True, auto_created=True)
+    path = models.ImageField(upload_to=upload_cover_image_path)
+
+    def __str__(self) -> str:
+        return self.path
+    

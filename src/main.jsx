@@ -8,6 +8,7 @@ import rootReducer from './reducers'
 import { Provider } from 'react-redux'
 import Cart from './components/Cart/Cart'
 import WishList from './components/WishList/WishList'
+import Product from './components/Product/Product'
 
 const store = createStore(
   rootReducer,
@@ -21,7 +22,8 @@ ReactDOM.render(
         <Routes>
           <Route path='/' element={ <App /> } />
           <Route path='/cart' element={ <Cart /> } />
-          <Route path='/wishlist' element={ <WishList /> } />
+          <Route path='/product/:id/' element={ <Product />} />
+          <Route path='/wishlist' element={ <WishList />} />
         </Routes>
       </Router>
     </React.StrictMode>

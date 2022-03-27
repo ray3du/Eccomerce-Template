@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { addAllIMages, addCategory, addColor, addImages, addShipment, addSize, addSubCategory, productAction } from './actions/actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { addAllIMages, addCart, addCategory, addColor, addImages, addShipment, addSize, addSubCategory, addWishList, productAction } from './actions/actions'
 import './App.css'
 import Best from './components/Home/Best'
 import Latest from './components/Home/Latest'
@@ -17,12 +17,16 @@ function App() {
     offer: ""
   })
 
+  const carts = useSelector(state => state.cart)
+  const wishList = useSelector(state => state.wishList)
+
   const dispatch = useDispatch()
 
   const fetchProducts = async () => {
     await axios.get('http://127.0.0.1:8000/product/')
     .then(res => {
       dispatch(productAction(res.data))
+      localStorage.setItem('products', JSON.stringify(res.data))
     }) 
     .catch(err => {
       console.log(err)
@@ -33,6 +37,7 @@ function App() {
     await axios.get('http://127.0.0.1:8000/category/')
     .then(res => {
       dispatch(addCategory(res.data))
+      localStorage.setItem('categories', JSON.stringify(res.data))
     }) 
     .catch(err => {
       console.log(err)
@@ -43,6 +48,7 @@ function App() {
     await axios.get('http://127.0.0.1:8000/subCategory/')
     .then(res => {
       dispatch(addSubCategory(res.data))
+      localStorage.setItem('subCategory', JSON.stringify(res.data))
     }) 
     .catch(err => {
       console.log(err)
@@ -53,6 +59,7 @@ function App() {
     await axios.get('http://127.0.0.1:8000/color/')
     .then(res => {
       dispatch(addColor(res.data))
+      localStorage.setItem('colors', JSON.stringify(res.data))
     }) 
     .catch(err => {
       console.log(err)
@@ -63,6 +70,7 @@ function App() {
     await axios.get('http://127.0.0.1:8000/size/')
     .then(res => {
       dispatch(addSize(res.data))
+      localStorage.setItem('sizes', JSON.stringify(res.data))
     }) 
     .catch(err => {
       console.log(err)
@@ -73,6 +81,7 @@ function App() {
     await axios.get('http://127.0.0.1:8000/shipment/')
     .then(res => {
       dispatch(addShipment(res.data))
+      localStorage.setItem('shipments', JSON.stringify(res.data))
     }) 
     .catch(err => {
       console.log(err)
@@ -125,6 +134,7 @@ function App() {
       setImage(res.data)
       .then(result => {
         dispatch(addImages(result))
+        localStorage.setItem('images', JSON.stringify(result))
       })
       .catch(err => console.error(err))
       setAllImage(res.data)
@@ -138,15 +148,47 @@ function App() {
     })
   }
 
+  const checkLocalStorage = (item) => {
+    return localStorage.getItem(item) !== null
+  }
+
+  const checkUndefined = (item) => {
+      return item.length === 0 
+  }
+
+  const checkWishList = () => {
+    if (checkLocalStorage("wishList")) {
+      if (checkUndefined(wishList.id)) {
+          const wishId = JSON.parse(localStorage.getItem("wishList"))
+          wishId.map(item => (
+              dispatch(addWishList(item))
+          ))
+      }
+    } 
+  }
+
+  const checkCart = () => {
+    if (checkLocalStorage("carts")) {
+      if (checkUndefined(carts.id)) {
+          const cart = JSON.parse(localStorage.getItem("carts"))
+          cart.map(item => (
+              dispatch(addCart(item))
+          ))
+      }
+  }
+  }
+
   useEffect(() => {
     fetchProducts()
     fetchCategory()
     fetchSubCategory()
-    fetchColor(),
-    fetchSize(),
-    fetchShipment(),
+    fetchColor()
+    fetchSize()
+    fetchShipment()
     fetchImages()
-  }, [dispatch])
+    checkWishList()
+    checkCart()
+  }, [dispatch, wishList, carts])
 
   return (
     <div className="bg-gray-200 min-h-screen">

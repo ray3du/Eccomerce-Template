@@ -1,8 +1,7 @@
 import Navbar from "../Home/Navbar"
-import img from "../../public/img/main.jpg"
 import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
-import { addQuantity, removeCart, subQuantity } from "../../actions/actions"
+import { useEffect, useState } from "react"
+import { addCart, addColor, addImages, addQuantity, addSize, addSubCategory, productAction, removeCart, subQuantity } from "../../actions/actions"
 import { FaChevronRight } from "react-icons/fa"
 
 const Cart = () => {
@@ -19,17 +18,56 @@ const Cart = () => {
         quantity: 1
     })
 
-    // const handleNumberChange = (e) => {
-    //     e.persist()
-    //     if (e.target.value < 1) {
-    //         setNumber(1)
-    //     }else{
-    //         setNumber(e.target.value)
-    //     }
-    // }
-
     const dispatch = useDispatch()
+
+    const checkLocalStorage = (item) => {
+        return localStorage.getItem(item) !== null
+    }
+
+    const checkUndefined = (item) => {
+        return item.length === 0 
+    }
+
+    const handleLocalStorage = () => {
+        if (checkLocalStorage("products")) {
+            if (checkUndefined(products)) {
+                dispatch(productAction(JSON.parse(localStorage.getItem("products"))))
+            }
+        }
+        if (checkLocalStorage("images")) {
+            if (checkUndefined(images)) {
+                dispatch(addImages(JSON.parse(localStorage.getItem("images"))))
+            }
+        }
+        if (checkLocalStorage("carts")) {
+            if (checkUndefined(carts)) {
+                const cart = JSON.parse(localStorage.getItem("carts"))
+                cart.map(item => (
+                    dispatch(addCart(item))
+                ))
+            }
+        }
+        if (checkLocalStorage("colors")) {
+            if (checkUndefined(colors)) {
+                dispatch(addColor(JSON.parse(localStorage.getItem("colors"))))
+            }
+        }
+        if (checkLocalStorage("sizes")) {
+            if (checkUndefined(sizes)) {
+                dispatch(addSize(JSON.parse(localStorage.getItem("sizes"))))
+            }
+        }
+        if (checkLocalStorage("subCategory")) {
+            if (checkUndefined(subCategories)) {
+                dispatch(addSubCategory(JSON.parse(localStorage.getItem("subCategory"))))
+            }
+        }
+    }
     
+    useEffect(() => {
+        handleLocalStorage()
+    }, [dispatch])
+
     return(
         <div className="bg-gray-200 min-h-screen">
             <Navbar />

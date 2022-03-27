@@ -1,8 +1,9 @@
 import Navbar from "../Home/Navbar"
 import img from "../../public/img/main.jpg"
 import { useDispatch, useSelector } from "react-redux"
-import { addCart, removeWishList } from "../../actions/actions"
+import { addCart, addWishList, productAction, addImages, addColor, addSize, addSubCategory, removeWishList } from "../../actions/actions"
 import { FaCheck } from "react-icons/fa"
+import { useEffect } from "react"
 
 const WishList = () => {
 
@@ -12,8 +13,72 @@ const WishList = () => {
     const sizes = useSelector(state => state.size)
     const subCategories = useSelector(state => state.subCategory)
     const cartId = useSelector(state => state.cart.id)
+    const images = useSelector(state => state.images)
 
     const dispatch = useDispatch()
+
+    const checkLocalStorage = (item) => {
+        return localStorage.getItem(item) !== null
+    }
+
+    const checkUndefined = (item) => {
+        return item.length === 0 
+    }
+
+    const handleLocalStorage = () => {
+        if (checkLocalStorage("products")) {
+            if (checkUndefined(products)) {
+                dispatch(productAction(JSON.parse(localStorage.getItem("products"))))
+            }
+        }
+        if (checkLocalStorage("images")) {
+            if (checkUndefined(images)) {
+                dispatch(addImages(JSON.parse(localStorage.getItem("images"))))
+            }
+        }
+        if (checkLocalStorage("wishList")) {
+            if (checkUndefined(wishLists)) {
+                const wishId = JSON.parse(localStorage.getItem("wishList"))
+                wishId.map(item => (
+                    dispatch(addWishList(item))
+                ))
+            }
+        }
+        if (checkLocalStorage("colors")) {
+            if (checkUndefined(colors)) {
+                dispatch(addColor(JSON.parse(localStorage.getItem("colors"))))
+            }
+        }
+        if (checkLocalStorage("sizes")) {
+            if (checkUndefined(sizes)) {
+                dispatch(addSize(JSON.parse(localStorage.getItem("sizes"))))
+            }
+        }
+        if (checkLocalStorage("subCategory")) {
+            if (checkUndefined(subCategories)) {
+                dispatch(addSubCategory(JSON.parse(localStorage.getItem("subCategory"))))
+            }
+        }
+    }
+
+    const removeFromWishList = (id) => {
+        dispatch(removeWishList(id))
+        if (checkLocalStorage("wishList")) {
+            const wishId = JSON.parse(localStorage.getItem("wishList"))
+            for (let index = 0; index < wishId.length; index++) {
+                if (wishId[index] === id) {
+                    wishId.splice(index, id)
+                }
+            }
+            localStorage.removeItem("carts")
+            localStorage.setItem("carts", wishId)
+        }
+    }
+    
+    useEffect(() => {
+        handleLocalStorage()
+    }, [dispatch])
+
     
     return(
         <div className="bg-gray-200 min-h-screen">
@@ -30,7 +95,14 @@ const WishList = () => {
                         <div className="flex flex-col lg:flex-row justify-content justify-between w-12/12 sm:w-5/12 lg:w-8/12 mx-6 bg-white py-2 px-2 my-6 shadow rounded" key={product.id} >
                             <div className="flex flex-col">
                                 <p className="text-xl mb-2">Item</p>
-                                <img src={img} alt="item" className="h-48 w-full lg:w-7/12"/>
+                                {/* <img src={img} alt="item" className="h-48 w-full lg:w-7/12"/> */}
+                                {
+                                images.map(image => ( 
+                                    image.product === product.id ?
+                                        <img src={image.path} alt="item" className="h-48 sm:w-4/12 object-contain"/>
+                                    : null
+                                ))
+                            }
                             </div>
                             <div className="flex flex-col w-full lg:w-3/12 mt-2 sm:mt-10">
                                 <p className="sm:text-lg md:text-2xl font-bold">{product.name}</p>
@@ -72,7 +144,7 @@ const WishList = () => {
                                 </div>
                                 <div>
                                    <div className="flex flex-row">
-                                   <button className="bg-red-500 rounded text-white px-4 my-2 hover:bg-red-600" onClick={ () => dispatch(removeWishList(`${product.id}`)) }>Remove</button>
+                                   <button className="bg-red-500 rounded text-white px-4 my-2 hover:bg-red-600" onClick={ () => removeFromWishList(`${product.id}`) }>Remove</button>
                                     <button disabled={cartId.includes(product.id) ? true: false} onClick={() => dispatch(addCart(`${product.id}`))} className={cartId.includes(product.id) ? "rounded text-white px-4 my-2 bg-slate-400 font-bold mx-2": "px-2 bg-sky-500 rounded text-white px-4 my-2 hover:bg-red-600 mx-2"}>{cartId.includes(product.id) ? <span className="flex flex-row justify-center items-center">ADDED <FaCheck className="mx-3"/></span> : 'ADD TO CART'}</button>
                                    </div>
                                 </div>
